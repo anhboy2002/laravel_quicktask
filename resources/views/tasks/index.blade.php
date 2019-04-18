@@ -1,15 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <!-- Bootstrap Boilerplate... -->
 
     <div class="panel-body">
-        <!-- Display Validation Errors -->
-    @include('common.error')
+    @include('common.message')
 
-    <!-- New Task Form -->
-        {!! Form::open(['route' => 'addtask', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
-
-        <!-- Task Name -->
+        {!! Form::open(['route' => 'task.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
             <div class="form-group">
                 {!! Form::label('task-name', trans('header.title_task') ,['class' => 'col-sm-3 control-label']) !!}
 
@@ -18,7 +13,6 @@
                 </div>
             </div>
 
-            <!-- Add Task Button -->
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
                     {!! Form::button('<i class="fa fa-trash"></i>Add Task', ['type' => 'submit', 'class' => 'btn btn-default']) !!}
@@ -26,7 +20,38 @@
             </div>
         {!! Form::close() !!}
     </div>
+    @if (count($tasks) > config('defaul_value'))
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Current Tasks
+            </div>
 
-    <!-- TODO: Current Tasks -->
+            <div class="panel-body">
+                <table class="table table-striped task-table">
+
+                    <thead>
+                    <th>@lang('header.title_task')</th>
+                    <th>&nbsp;</th>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($tasks as $task)
+                        <tr>
+                            <td class="table-text">
+                                <div>{{ $task->name }}</div>
+                            </td>
+
+                            <td>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['task.destroy', $task->id]]) !!}
+                                {!! Form::submit(trans('header.delete'), ['class' => 'btn btn-danger', 'id' => 'delete-task-'. $task->id]) !!}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
 @endsection
 

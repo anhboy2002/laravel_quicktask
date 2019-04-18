@@ -12,4 +12,5 @@ return [
     'reset_password' => 'Reset Password',
     'title_task' => 'Task',
     'add_task' => 'Add Task',
+    'delete' => 'Delete',
 ];
