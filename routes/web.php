@@ -18,6 +18,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/task', ['as' => 'showtask', 'uses'=> 'TaskController@index']);
-Route::get('/task/add', ['as' => 'addtask', 'uses'=> 'TaskController@add']);
+Route::resource('/task', 'TaskController');
